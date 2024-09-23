@@ -1,52 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Webcam Capture</title>
     <style>
-        #webcam {
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 10px;
+            /* Reduz o espaço entre o título e o canvas */
+        }
+
+        #canvas {
             border: 1px solid black;
             display: block;
-            margin: 0 auto;
+            margin: 10px auto;
+            /* Menor espaço entre o canvas e os elementos */
         }
-        #captured {
-            border: 1px solid black;
-            display: block;
-            margin: 0 auto;
-            margin-top: 20px;
-            display: none; /* Initially hide the captured image */
-        }
+
         #result {
             text-align: center;
-            margin-top: 20px;
-            font-size: 1.2em;
+            font-size: 2em;
+            /* Aumentando o tamanho da fonte */
+            margin-top: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
+
     </style>
 </head>
+
 <body>
     <h1>Webcam Capture</h1>
-    <video id="webcam" width="640" height="480" autoplay></video>
-    <canvas id="canvas" width="640" height="480" style="display: none;"></canvas>
-    <img id="captured" width="640" height="480" />
-    <div id="result"></div>
+    <canvas id="canvas" width="640" height="480"></canvas>
+    <div id="result">Waiting for detection...</div>
+
+    <!-- Adicionando o elemento de áudio -->
+    <audio id="alert-audio">
+        <source src="AUDIO_TESTE.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <script src="functions.js"></script>
     <script>
-        const webcam = document.getElementById('webcam');
         const canvas = document.getElementById('canvas');
-        const capturedImage = document.getElementById('captured');
-        const resultDiv = document.getElementById('result');
         const context = canvas.getContext('2d');
+        const resultDiv = document.getElementById('result');
+        const alertAudio = document.getElementById('alert-audio');
         const captureInterval = 1000;
 
-        async function startWebcam() {
-            try {
-                const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-                webcam.srcObject = stream;
-            } catch (err) {
-                console.error('Error accessing webcam: ', err);
-            }
-        }
+        startWebcam(canvas, context, resultDiv, alertAudio, captureInterval);
 
+<<<<<<< Updated upstream
         function captureImage() {
             context.drawImage(webcam, 0, 0, canvas.width, canvas.height);
             const imageData = canvas.toDataURL('image/jpeg');
@@ -95,6 +112,9 @@
 
         startWebcam();
         setInterval(captureImage, captureInterval);
+=======
+>>>>>>> Stashed changes
     </script>
 </body>
+
 </html>
